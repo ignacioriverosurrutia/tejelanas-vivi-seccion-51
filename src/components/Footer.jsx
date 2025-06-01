@@ -8,11 +8,11 @@ const Footer = () => {
         <div className="row">
           <div className="col-md-6">
             <h5>Tejelanas Vivi</h5>
-            <p>Tu tienda de confianza para productos de tejido</p>
+            <p>Tu tienda de confianza para productos de tejido.</p>
           </div>
           <div className="col-md-6 text-md-end">
-            <p>© 2024 Tejelanas Vivi</p>
-            <p>Laguna de Zapallar, Chile</p>
+            <p>© 2025 Tejelanas Vivi</p>
+            <p>Carlos Leon Briceño #1002 local 4, Laguna.</p>
           </div>
         </div>
       </div>

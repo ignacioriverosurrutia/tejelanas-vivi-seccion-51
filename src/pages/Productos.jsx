@@ -1,73 +1,98 @@
-import React, { useState, useMemo } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import Card from '../components/Card';
-import { PRODUCTOS } from '../constants/data';
-
+import React, { useEffect, useState } from 'react';
+import { Container, Carousel } from 'react-bootstrap';
+ 
 const Productos = () => {
-  const [categoria, setCategoria] = useState('todos');
-  const [busqueda, setBusqueda] = useState('');
-
-  const productosFiltrados = useMemo(() => {
-    return PRODUCTOS.filter(producto => {
-      const coincideCategoria = categoria === 'todos' || producto.categoria === categoria;
-      const coincideBusqueda = producto.title.toLowerCase().includes(busqueda.toLowerCase()) ||
-                              producto.description.toLowerCase().includes(busqueda.toLowerCase());
-      return coincideCategoria && coincideBusqueda;
-    });
-  }, [categoria, busqueda]);
-
-  const handleContactClick = (producto) => {
-    alert(`Interesado en: ${producto.title}`);
-  };
-
+  const [productos, setProductos] = useState([]);
+  const [servicios, setServicios] = useState([]);
+ 
+  useEffect(() => {
+    const apiUrl = 'https://www.clinicatecnologica.cl/ipss/tejelanasVivi/api/v1/products-services/';
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const token = 'ipss.get';
+ 
+    fetch(proxyUrl + apiUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(response => {
+        if (response.data) {
+          if (Array.isArray(response.data.productos)) {
+            setProductos(response.data.productos);
+          }
+          if (Array.isArray(response.data.servicios)) {
+            setServicios(response.data.servicios);
+          }
+        } else {
+          console.error('Respuesta inesperada:', response);
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener los datos:', error);
+        alert('No se pudieron cargar los productos y servicios.');
+      });
+  }, []);
+ 
   return (
-    <Container className="py-5">
-      <h1 className="text-center mb-5">Nuestros Productos</h1>
-      
-      <Row className="mb-4">
-        <Col md={6} className="mb-3 mb-md-0">
-          <Form.Select 
-            value={categoria} 
-            onChange={(e) => setCategoria(e.target.value)}
-          >
-            <option value="todos">Todas las categorías</option>
-            <option value="lana">Lanas</option>
-            <option value="kit">Kits</option>
-            <option value="accesorios">Accesorios</option>
-          </Form.Select>
-        </Col>
-        <Col md={6}>
-          <Form.Control 
-            type="search" 
-            placeholder="Buscar productos..." 
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-          />
-        </Col>
-      </Row>
-
-      {productosFiltrados.length === 0 ? (
-        <div className="text-center py-5">
-          <h3>No se encontraron productos</h3>
-          <p>Intenta con otros términos de búsqueda o categoría</p>
-        </div>
+<Container className="py-5">
+<h1 className="text-center mb-5">Nuestros Productos</h1>
+ 
+      {productos.length === 0 ? (
+<div className="text-center py-5">
+<h3>Cargando productos...</h3>
+</div>
       ) : (
-        <Row xs={1} md={2} lg={3} className="g-4">
-          {productosFiltrados.map((producto) => (
-            <Col key={producto.id}>
-              <Card
-                imageUrl={producto.imageUrl}
-                title={producto.title}
-                description={producto.description}
-                price={producto.price}
-                onContactClick={() => handleContactClick(producto)}
+<Carousel className="mb-5">
+          {productos.map((producto) => (
+<Carousel.Item key={producto.id}>
+<img
+                className="d-block w-100"
+                src={producto.imgs[0]}
+                alt={producto.nombre}
+                style={{ maxHeight: '500px', objectFit: 'cover' }}
               />
-            </Col>
+<Carousel.Caption className="bg-dark bg-opacity-50 rounded p-3">
+<h3>{producto.nombre}</h3>
+<p>{producto.descripcion}</p>
+<p><strong>Precio:</strong> ${producto.precio.toLocaleString()}</p>
+                {producto.tallas.length > 0 && <p><strong>Tallas:</strong> {producto.tallas.join(', ')}</p>}
+                {producto.colores.length > 0 && <p><strong>Colores:</strong> {producto.colores.join(', ')}</p>}
+</Carousel.Caption>
+</Carousel.Item>
           ))}
-        </Row>
+</Carousel>
       )}
-    </Container>
+ 
+      <h1 className="text-center mb-5">Nuestros Talleres</h1>
+ 
+      {servicios.length === 0 ? (
+<div className="text-center py-5">
+<h3>Cargando talleres...</h3>
+</div>
+      ) : (
+<Carousel>
+          {servicios.map((servicio) => (
+<Carousel.Item key={servicio.id}>
+<img
+                className="d-block w-100"
+                src={servicio.imgs[0]}
+                alt={servicio.nombre}
+                style={{ maxHeight: '500px', objectFit: 'cover' }}
+              />
+<Carousel.Caption className="bg-dark bg-opacity-50 rounded p-3">
+<h3>{servicio.nombre}</h3>
+<p><strong>Ubicación:</strong> {servicio.ubicacion}</p>
+<p><strong>Fecha:</strong> {servicio.fecha}</p>
+<p><strong>Cupos disponibles:</strong> {servicio.cupos}</p>
+</Carousel.Caption>
+</Carousel.Item>
+          ))}
+</Carousel>
+      )}
+</Container>
   );
 };
-
-export default Productos; 
+ 
+export default Productos;

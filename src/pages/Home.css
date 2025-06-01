@@ -1,0 +1,173 @@
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+              url('https://images.unsplash.com/photo-1576872381149-7847515ce5d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+  background-size: cover;
+  background-position: center;
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Features Section */
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  color: #0d6efd;
+  margin-bottom: 1rem;
+}
+
+/* Product Cards */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+/* Testimonials */
+.testimonial-card {
+  transition: transform 0.3s ease;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+
+.testimonial-rating {
+  color: #ffc107;
+  font-size: 1.2rem;
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(rgba(13, 110, 253, 0.9), rgba(13, 110, 253, 0.9)),
+              url ('https://www.istockphoto.com/es/foto/fondo-de-pasatiempo-artesanal-con-hilo-en-colores-naturales-gm1346636854-424352442');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Quiénes Somos Section */
+.quienes-somos-section {
+  background-color: #f8f9fa;
+}
+
+.quienes-somos-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.quienes-somos-image img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.quienes-somos-image:hover img {
+  transform: scale(1.05);
+}
+
+.quienes-somos-content {
+  padding: 2rem;
+}
+
+.quienes-somos-content h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.quienes-somos-content p {
+  color: #666;
+  line-height: 1.8;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 60vh;
+    text-align: center;
+  }
+
+  .hero-section .d-flex {
+    justify-content: center;
+  }
+
+  .feature-card, .product-card, .testimonial-card {
+    margin-bottom: 1rem;
+  }
+
+  .quienes-somos-section {
+    text-align: center;
+  }
+  
+  .quienes-somos-image {
+    margin-bottom: 2rem;
+  }
+  
+  .quienes-somos-content {
+    padding: 1rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature-card, .product-card, .testimonial-card {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.feature-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.feature-card:nth-child(3) {
+  animation-delay: 0.4s;
+} 
